@@ -1,1 +1,3 @@
-# flask_demo
+flask_demo
+#项目说明
+# 本项目是用flask学习所用的知识来进行开发的一个web项目
