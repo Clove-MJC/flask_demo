@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/flask_xiangmu.iml" filepath="$PROJECT_DIR$/.idea/flask_xiangmu.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../2123/flask_xinjin/.idea/flask_xinjin.iml" filepath="$PROJECT_DIR$/../2123/flask_xinjin/.idea/flask_xinjin.iml" />
     </modules>
   </component>
 </project>
