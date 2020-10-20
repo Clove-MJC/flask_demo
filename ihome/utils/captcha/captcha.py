@@ -6,9 +6,8 @@
 import random
 import string
 import os.path
-# from cStringIO import StringIO
-import io
-# from  io import
+from io import BytesIO
+
 from PIL import Image
 from PIL import ImageFilter
 from PIL.ImageDraw import Draw
@@ -69,7 +68,7 @@ class Captcha(object):
 
     def initialize(self, width=200, height=75, color=None, text=None, fonts=None):
         # self.image = Image.new('RGB', (width, height), (255, 255, 255))
-        self._text = text if text else random.sample(string.uppercase + string.uppercase + '3456789', 4)
+        self._text = text if text else random.sample(string.ascii_uppercase + string.ascii_uppercase + '3456789', 4)
         self.fonts = fonts if fonts else \
             [os.path.join(self._dir, 'fonts', font) for font in ['Arial.ttf', 'Georgia.ttf', 'actionj.ttf']]
         self.width = width
@@ -99,7 +98,7 @@ class Captcha(object):
         dx, height = image.size
         dx /= number
         path = [(dx * i, random.randint(0, height))
-                for i in xrange(1, number)]
+                for i in range(1, number)]
         bcoefs = self._bezier.make_bezier(number - 1)
         points = []
         for coefs in bcoefs:
@@ -115,7 +114,7 @@ class Captcha(object):
         dy = height / 10
         height -= dy
         draw = Draw(image)
-        for i in xrange(number):
+        for i in range(number):
             x = int(random.uniform(dx, width))
             y = int(random.uniform(dy, height))
             draw.line(((x, y), (x + level, y)), fill=color if color else self._color, width=level)
@@ -206,9 +205,9 @@ class Captcha(object):
         image = self.curve(image)
         image = self.noise(image)
         image = self.smooth(image)
-        name = "".join(random.sample(string.lowercase + string.uppercase + '3456789', 24))
+        name = "".join(random.sample(string.ascii_lowercase + string.ascii_uppercase + '3456789', 24))
         text = "".join(self._text)
-        out = io.StringIO()
+        out = BytesIO()
         image.save(out, format=fmt)
         if path:
             image.save(os.path.join(path, name), fmt)
@@ -217,6 +216,7 @@ class Captcha(object):
     def generate_captcha(self):
         self.initialize()
         return self.captcha("")
+
 
 captcha = Captcha.instance()
 
