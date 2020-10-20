@@ -2,14 +2,15 @@ from . import api
 # 图片验证码
 from ihome.utils.captcha.captcha import captcha
 from ihome import redis_store, constants
-
+from flask import current_app,jsonify,make_response
+from ihome.utils.response_code import RET
 
 @api.route("/image_codes/<image_code_id>")
 def get_image_code(image_code_id):
     """
     获取图片验证码
     :param image_code_id:图片验证码编号
-    :return:
+    :return: 正常图片，异常返回错误代码
     """
     # 获取参数
     # 检验参数
@@ -22,4 +23,8 @@ def get_image_code(image_code_id):
     try:
         redis_store.setex("image_code%s" % image_code_id, constants.IMAGE_CODE_REDIS_EXPIRES,text)
     except  Exception as e:
-                pass
+               return jsonify(errno=RET.DBERR,errmsg="save imge_code id 错误")
+    #返回图片
+    resp=make_response(image_data)
+    resp.headers["Content-Type"]='image/jpg'
+    return resp
