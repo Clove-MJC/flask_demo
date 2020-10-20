@@ -1,8 +1,8 @@
-"""数据库初始化
+"""在宿舍初始化数据库迁移“
 
-Revision ID: 42c6b80e12a9
+Revision ID: 83989978646b
 Revises: 
-Create Date: 2020-10-20 08:27:47.492775
+Create Date: 2020-10-20 10:15:51.892241
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '42c6b80e12a9'
+revision = '83989978646b'
 down_revision = None
 branch_labels = None
 depends_on = None

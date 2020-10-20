@@ -18,7 +18,7 @@ class Config(object):
     SQLALCHEMY_MAX_OVERFLOW = 2
     # redis 配置
     redis_host = '127.0.0.1'
-    redis_port = 8888
+    redis_port = 6379
     # sesson配置
     SESSION_TYPE = 'redis'  # session类型为redis
     SESSION_PERMANENT = False  # 如果设置为True，则关闭浏览器session就失效
