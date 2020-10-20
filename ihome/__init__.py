@@ -8,6 +8,7 @@ import redis
 from flask_wtf import CSRFProtect
 from flask_session import Session
 
+from ihome.utils.commons import ReConverter
 # 数据库
 db = SQLAlchemy()
 
@@ -40,8 +41,15 @@ def create_app(config_name):
     Session(app)
     # 为flask补充防护攻击
     CSRFProtect(app)
+    #为flask添加自定义的转换器
+    app.url_map.converters["re"]=ReConverter
+
     # 注册蓝图,添加路有地址
     # 注册蓝图
     from ihome import api_1_0
     app.register_blueprint(api_1_0.api, url_prefix="/api/v1.0")
+
+    #注册静态文件蓝图
+    from ihome import web_html
+    app.register_blueprint(web_html.html)
     return app
