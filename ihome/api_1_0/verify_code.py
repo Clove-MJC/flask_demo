@@ -5,7 +5,7 @@ from ihome.utils.captcha.captcha import captcha
 from ihome import redis_store, constants, db
 from flask import current_app, jsonify, make_response, request
 from ihome.utils.response_code import RET
-from utils.sms_aliyun import send_msg_to_phone
+from ihome.libs.sms_aliyun import send_msg_to_phone
 # 引入用户信息
 from ihome.models import User
 
@@ -70,7 +70,7 @@ def get_sms_code(mobile):
     try:
         user = User.query.filter_by(mobile=mobile).first()
     except Exception as e:
-        pass
+        return "11111"
     else:
         if user is None:
             return jsonify(errno=RET.DATAEXIST, errmsg='手机号已经存在')

@@ -23,3 +23,5 @@ def get_html(html_file_name):
     # flask返回静文件方法
     resp = make_response(current_app.send_static_file(html_file_name))
     # 设置cookie值
+    resp.set_cookie("csrf_token", csrf_token)
+    return resp
