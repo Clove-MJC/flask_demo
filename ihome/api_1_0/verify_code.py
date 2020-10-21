@@ -62,7 +62,11 @@ def get_sms_code(mobile):
     if real_image_code is None:
         # 表示图片验证码不存在或者过期
         return jsonify(errno=RET.NODATA, errmsg='图片验证码失效')
-
+    # 删除图片验证码防止重复使用同一个验证码来进行校验
+    try:
+        redis_store.delete("image_cod_%s"%image_code_id)
+    except Exception as e:
+            pass
     # 与用户真实写入的信息进行对比
     if real_image_code.lower() != image_code.lower():
         return jsonify(errno=RET.NODATA, errmsg='图片验证码写错啦')
@@ -74,6 +78,8 @@ def get_sms_code(mobile):
     else:
         if user is None:
             return jsonify(errno=RET.DATAEXIST, errmsg='手机号已经存在')
+
+
     #  生成一个随机的6位数
     sms_code = "%06d" % str(random.randint(100000, 999999))
     print("短信验证码是:", sms_code)
