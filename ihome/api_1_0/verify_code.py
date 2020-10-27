@@ -27,7 +27,7 @@ def get_image_code(image_code_id):
     # redis_store.expire("image_code_%s" % image_code_id, constants.IMAGE_CODE_REDIS_EXPIRES)
     # 记录名，有效期，记录值
     try:
-        redis_store.setex("image_code%s" % image_code_id, constants.IMAGE_CODE_REDIS_EXPIRES, text)
+        redis_store.setex("image_code_%s" % image_code_id, constants.IMAGE_CODE_REDIS_EXPIRES, text)
     except  Exception as e:
         return jsonify(errno=RET.DBERR, errmsg="save imge_code id 错误")
     # 返回图片
@@ -53,7 +53,7 @@ def get_sms_code(mobile):
 
     # 从redis获取图片验证码，但是有一个问题可能redis过期
     try:
-        real_image_code = redis_store.get("image_code%s" % image_code_id)
+        real_image_code = redis_store.get("image_code_%s" % image_code_id)
 
     except Exception as e:
         current_app.looger.error(e)
